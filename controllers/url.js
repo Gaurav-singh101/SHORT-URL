@@ -27,7 +27,10 @@ async function handleGenerateNewShortURL(req, res) {
         });
 
         // Respond with the generated short ID and the saved data
-        return res.status(201).json({ id: shortid, data: newUrl });
+        return res.render("home", {
+            id: shortid,
+        });
+        
     } catch (error) {
         console.error(error); // Log the error for debugging
         return res.status(500).json({ error: 'Internal Server Error' });
