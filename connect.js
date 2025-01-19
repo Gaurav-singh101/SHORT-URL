@@ -8,6 +8,3 @@ async function connectToMongoDB(url) {
 module.exports = {
     connectToMongoDB,
 };
-
-
-

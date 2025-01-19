@@ -3,7 +3,7 @@ const path = require('path');
 const { connectToMongoDB } = require("./connect");
 const urlRoute = require("./routes/url");
 const staticRouter = require('./routes/staticRouter');
-const URL = require('./models/url');
+const URL = require("./models/URL");
 
 const app = express();
 const PORT  = 8001;
