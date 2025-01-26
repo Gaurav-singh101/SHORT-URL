@@ -20,6 +20,12 @@ h1 {
     margin: 20px 0;
 }
 
+.URL{
+    color: #000000;
+    font-size: 25px;
+
+}
+
 /* Form Styles */
 form {
     max-width: 500px;
@@ -116,7 +122,13 @@ p {
     <h1>URL Shortener</h1>
 
     <% if (locals.id){ %>
-        <p>URL Generated: http://localhost:8001/url/<%= id %> </p>
+        <p class="URL">
+            URL Generated: 
+            <a href="http://localhost:8001/url/<%= id %>" target="_blank" style="color: rgb(39, 39, 173); text-decoration: none;">
+              http://localhost:8001/url/<%= id %>
+            </a>
+          </p>
+          
     <% } %>
 
 

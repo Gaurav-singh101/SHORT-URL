@@ -8,7 +8,7 @@ function checkForAuthentication(req , res , next){
     const token = tokenCookie ;
     const user = getUser(token);
 
-    req.user = user ; 
+    req.user = user ;
 
     next();
 }
