@@ -2,12 +2,12 @@ const express = require("express");
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const { connectToMongoDB } = require("./connect");
-
+const URL = require('./models/URL');
 
 
 const { checkForAuthentication, restrictTo } = require("./middlewares/auth");
 
-const urlRoute = require("./routes/url");
+const urlRoute = require("./routes/urlL");
 const staticRouter = require('./routes/staticRouter');
 const userRoute = require('./routes/user');
 
