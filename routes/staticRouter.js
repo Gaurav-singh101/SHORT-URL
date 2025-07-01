@@ -1,5 +1,5 @@
 const express = require("express");
-const URL = require("../models/URL"); 
+const URL = require("../models/My_URL"); 
 const { restrictTo } = require("../middlewares/auth");
 
 const router = express.Router();
