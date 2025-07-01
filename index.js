@@ -2,26 +2,31 @@ const express = require("express");
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const { connectToMongoDB } = require("./connect");
-const URL = require("./models/URL");
-const { checkForAuthentication, restrictTo } = require("./middlewares/auth");
 
-require('dotenv').config();
+// Check the actual filename in your models folder and adjust accordingly
+const URL = require("./models/url"); // Use lowercase if your file is url.js
+// const URL = require("./models/URL"); // Use uppercase if your file is URL.js
+
+const { checkForAuthentication, restrictTo } = require("./middlewares/auth");
 
 const urlRoute = require("./routes/url");
 const staticRouter = require('./routes/staticRouter');
 const userRoute = require('./routes/user');
 
 const app = express();
-const PORT = process.env.PORT || 8001;
+const PORT = process.env.PORT || 8001; // Use environment port for deployment
 
-// Connect to Atlas
-connectToMongoDB();
+// Use environment variable for MongoDB connection
+const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/short-url";
+connectToMongoDB(mongoURI)
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('MongoDB connection error:', err));
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(checkForAuthentication);
 
@@ -35,7 +40,13 @@ app.use('/url/:shortId', async (req, res) => {
     try {
         const entry = await URL.findOneAndUpdate(
             { shortID: shortId },
-            { $push: { VisitHistory: { timestamp: Date.now() } } },
+            {
+                $push: {
+                    VisitHistory: {
+                        timestamp: Date.now(),
+                    },
+                },
+            },
             { new: true }
         );
 
@@ -44,6 +55,7 @@ app.use('/url/:shortId', async (req, res) => {
         }
 
         res.redirect(entry.redirectURL);
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
