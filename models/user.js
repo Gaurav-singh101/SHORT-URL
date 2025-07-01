@@ -1,4 +1,3 @@
-const { name } = require("ejs");
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
@@ -11,18 +10,18 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    role: {
-        type: String , 
-        required: true , 
-        default : "NORMAL" ,
-    },
-    password:{
+    password: {
         type: String,
         required: true,
     },
-},  {timestamps: true }
-);
+    role: {
+        type: String,
+        required: true,
+        default: "NORMAL",
+    },
+}, { timestamps: true });
 
-const User = mongoose.model('user' , userSchema);
+// Check if model already exists before creating it
+const User = mongoose.models.User || mongoose.model("users", userSchema);
 
-module.exports = User ;
+module.exports = User;

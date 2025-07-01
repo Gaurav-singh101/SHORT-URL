@@ -1,16 +1,25 @@
-const mongoose = require('mongoose');
-
-const { nanoid } = require('nanoid');
+const mongoose = require("mongoose");
 
 const urlSchema = new mongoose.Schema({
-    shortID: { type: String, required: true, unique: true },
-    redirectURL: { type: String, required: true },
-    VisitHistory: { type: Array, default: [] },
-    sortid: { type: String, required: true, default: () => nanoid() }, 
-    createdBy :{
-        type: mongoose.Schema.Types.ObjectId , 
-        ref: "users" ,
+    shortID: {
+        type: String,
+        required: true,
+        unique: true,
     },
-});
+    redirectURL: {
+        type: String,
+        required: true,
+    },
+    VisitHistory: [{
+        timestamp: { type: Number }
+    }],
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
+    },
+}, { timestamps: true });
 
-module.exports = mongoose.model('URL', urlSchema);
+// Check if model already exists before creating it
+const URL = mongoose.models.URL || mongoose.model("URL", urlSchema);
+
+module.exports = URL;

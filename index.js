@@ -3,9 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const { connectToMongoDB } = require("./connect");
 
-// Check the actual filename in your models folder and adjust accordingly
-const URL = require("./models/url"); // Use lowercase if your file is url.js
-// const URL = require("./models/URL"); // Use uppercase if your file is URL.js
+
 
 const { checkForAuthentication, restrictTo } = require("./middlewares/auth");
 
