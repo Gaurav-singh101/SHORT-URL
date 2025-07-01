@@ -2,7 +2,7 @@ const express = require("express");
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const { connectToMongoDB } = require("./connect");
-const URL = require('./models/URL');
+const URL = require('./models/URL.js');
 
 
 const { checkForAuthentication, restrictTo } = require("./middlewares/auth");
