@@ -18,20 +18,26 @@ router.get('/admin/urls', restrictTo(['ADMIN']), async (req, res) => {
     }
 });
 
-
-router.get('/' , restrictTo(['NORMAL' , 'ADMIN']) ,  async(req , res) => {
+// Updated root route - shows signup first for unauthenticated users
+router.get('/', async (req, res) => {
+    // If user is not authenticated, redirect to signup
+    if (!req.user) {
+        return res.redirect('/signup');
+    }
+    
+    // If user is authenticated, show their URLs
     const allurls = await URL.find({ createdBy: req.user._id }); 
-    return res.render("home" , {
-        urls: allurls , 
+    return res.render("home", {
+        urls: allurls,
     });
 });
 
-router.get("/signup" , (req , res) => {
+router.get("/signup", (req, res) => {
     return res.render("signup");
 });
 
-router.get("/login" , (req , res) => {
+router.get("/login", (req, res) => {
     return res.render("login");
 });
 
-module.exports = router ;
+module.exports = router;

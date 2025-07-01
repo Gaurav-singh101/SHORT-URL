@@ -1,3 +1,0 @@
-Authentication -- two patterns
-    1. StateFull - Which maintains state or data or server side .
-    2. StateLess - Which has no state . 
